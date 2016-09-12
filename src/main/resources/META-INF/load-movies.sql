@@ -1,0 +1,3 @@
+INSERT INTO MOVIE("ID", "NAME") VALUES (1, 'Star Wars: A New Hope')
+INSERT INTO MOVIE("ID", "NAME") VALUES (2, 'Terminator')
+INSERT INTO MOVIE("ID", "NAME") VALUES (3, 'Rambo')
