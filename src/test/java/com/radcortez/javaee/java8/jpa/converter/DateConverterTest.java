@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static java.time.temporal.ChronoUnit.YEARS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -21,12 +22,10 @@ import static org.junit.Assert.assertNotNull;
 public class DateConverterTest {
     @Deployment
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class)
-                                         .addPackage("com.radcortez.javaee.java8.jpa.converter")
-                                         .addAsWebInfResource("beans.xml")
-                                         .addAsResource("META-INF/persistence.xml");
-        System.out.println(war.toString(true));
-        return war;
+        return ShrinkWrap.create(WebArchive.class)
+                         .addPackage("com.radcortez.javaee.java8.jpa.converter")
+                         .addAsWebInfResource("beans.xml")
+                         .addAsResource("META-INF/persistence.xml");
     }
 
     @Inject
@@ -41,5 +40,8 @@ public class DateConverterTest {
         assertNotNull(person);
         assertEquals(LocalDate.of(1990, 5, 10), person.getBirthDate());
         assertEquals(now, person.getCreateDate());
+
+        long years = person.getBirthDate().until(now, YEARS);
+        System.out.println(person.getName() + " is " + years + " old.");
     }
 }
