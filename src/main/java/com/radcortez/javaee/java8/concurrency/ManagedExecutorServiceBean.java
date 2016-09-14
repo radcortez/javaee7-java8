@@ -42,18 +42,20 @@ package com.radcortez.javaee.java8.concurrency;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.enterprise.concurrent.ManagedExecutorService;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Arun Gupta
  */
 @Stateless
 public class ManagedExecutorServiceBean {
-    @Resource(name = "DefaultManagedExecutorService")
+    @Resource
     private ManagedExecutorService executor;
 
     public void executeTask() {
-        executor.submit(() -> System.out.println("Executing Task!"));
+        executor.submit(this::task);
+    }
+
+    private Runnable task() {
+       return () -> System.out.println("Executing Task!");
     }
 }

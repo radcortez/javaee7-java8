@@ -41,11 +41,7 @@ package com.radcortez.javaee.java8.concurrency;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
-import javax.enterprise.concurrent.LastExecution;
-import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.concurrent.ManagedScheduledExecutorService;
-import javax.enterprise.concurrent.Trigger;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -53,10 +49,14 @@ import java.util.concurrent.TimeUnit;
  */
 @Stateless
 public class ManagedScheduledExecutorServiceBean {
-    @Resource(name = "DefaultManagedScheduledExecutorService")
+    @Resource
     private ManagedScheduledExecutorService executor;
 
     public void executeTask() {
-        executor.schedule(() -> System.out.println("Executing Scheduled Task!"), 10, TimeUnit.SECONDS);
+        executor.schedule(this::task, 10, TimeUnit.SECONDS);
+    }
+
+    private Runnable task() {
+        return () -> System.out.println("Executing Scheduled Task!");
     }
 }

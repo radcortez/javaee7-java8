@@ -9,9 +9,7 @@ import org.junit.runner.RunWith;
 
 import javax.ejb.EJB;
 
-import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.junit.Assert.*;
 
 /**
  * @author Roberto Cortez
