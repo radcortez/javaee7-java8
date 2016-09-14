@@ -23,11 +23,9 @@ import static org.junit.Assert.assertNotNull;
 public class UriInfoTest {
     @Deployment
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class)
-                                         .addPackage("com.radcortez.javaee.java8.jaxrs.uriinfo")
-                                         .addAsWebInfResource("beans.xml");
-        System.out.println(war.toString(true));
-        return war;
+        return ShrinkWrap.create(WebArchive.class)
+                         .addPackage("com.radcortez.javaee.java8.jaxrs.uriinfo")
+                         .addAsWebInfResource("beans.xml");
     }
 
     @ArquillianResource

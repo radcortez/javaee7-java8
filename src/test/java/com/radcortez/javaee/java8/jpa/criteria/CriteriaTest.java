@@ -22,14 +22,11 @@ import static org.junit.Assert.assertNotNull;
 public class CriteriaTest {
     @Deployment
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class)
-                                         .addPackage("com.radcortez.javaee.java8.jpa.criteria")
-                                         .addAsWebInfResource("beans.xml")
-                                         .addAsResource("META-INF/persistence.xml")
-                                         .addAsResource("META-INF/load-vehicles.sql", "META-INF/load.sql")
-                ;
-        System.out.println(war.toString(true));
-        return war;
+        return ShrinkWrap.create(WebArchive.class)
+                         .addPackage("com.radcortez.javaee.java8.jpa.criteria")
+                         .addAsWebInfResource("beans.xml")
+                         .addAsResource("META-INF/persistence.xml")
+                         .addAsResource("META-INF/load-vehicles.sql", "META-INF/load.sql");
     }
 
     @Inject
