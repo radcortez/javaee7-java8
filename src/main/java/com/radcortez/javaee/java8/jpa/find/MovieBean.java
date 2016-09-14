@@ -6,6 +6,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 /**
@@ -38,5 +39,10 @@ public class MovieBean {
         } catch (final NoResultException e) {
             return Optional.empty();
         }
+    }
+
+    @Transactional(REQUIRED)
+    public void deleteMovie(final Long id) {
+        findMovieWithQueryEnhanced(id).ifPresent(entityManager::remove);
     }
 }
