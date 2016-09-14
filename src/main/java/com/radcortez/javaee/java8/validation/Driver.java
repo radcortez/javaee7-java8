@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class Driver {
     @NotNull(message = "name may not be null")
     private String name;
-    @NotNull(message = "licence may not be null")
+    @License
     private String licence;
 
     public Driver() {

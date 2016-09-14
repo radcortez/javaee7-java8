@@ -18,6 +18,6 @@ public class DriverValidationBean {
         return validator.validate(driver)
                  .stream()
                  .map(ConstraintViolation::getMessage)
-                 .collect(Collectors.joining("\n"));
+                 .collect(Collectors.joining(", "));
     }
 }
