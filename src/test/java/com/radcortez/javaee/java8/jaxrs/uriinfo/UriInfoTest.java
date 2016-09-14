@@ -12,6 +12,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.junit.Assert.assertNotNull;
@@ -61,5 +62,14 @@ public class UriInfoTest {
                                       .get(Address.class);
 
         assertNotNull(address);
+    }
+
+    @Test
+    public void testToParameterList() throws Exception {
+        final List<String> parameterList = UriInfoBean.toParameterList("1,2,3", "0");
+        parameterList.forEach(System.out::println);
+
+        final List<String> parameterListEnhanced = UriInfoBean.toParameterListEnhanced("1,2,3", "0");
+        parameterListEnhanced.forEach(System.out::println);
     }
 }

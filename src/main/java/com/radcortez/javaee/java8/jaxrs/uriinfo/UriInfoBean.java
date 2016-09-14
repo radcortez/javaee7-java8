@@ -11,8 +11,11 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -69,4 +72,26 @@ public class UriInfoBean extends Application {
                         .findFirst()
                         .orElseThrow(WebApplicationException::new);
     }
+
+    public static List<String> toParameterList(final String params, final String defaultValue) {
+        if (params != null) {
+            final List<String> parsedParams = new ArrayList<>();
+            for (final String p : params.split(",")) {
+                parsedParams.add(p.toUpperCase());
+            }
+            return parsedParams;
+        } else {
+            return Collections.singletonList(defaultValue);
+        }
+    }
+
+    public static List<String> toParameterListEnhanced(final String params, final String defaultValue) {
+        return Optional.ofNullable(params)
+                       .map(p -> p.split(","))
+                       .map(a -> Stream.of(a)
+                                       .map(String::toUpperCase)
+                                       .collect(Collectors.toList()))
+                       .orElse(Collections.singletonList(defaultValue));
+    }
 }
+
