@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-
 /**
  * @author Roberto Cortez
  */
@@ -32,7 +31,7 @@ public class BatchCrazyIdea {
         final BatchJob<ResultSet> batchJob = Batch.createBatchJob(ResultSet.class);
 
         batchJob.itemCount(10)
-                .read(((ItemReader<Object>) () -> resultSet.next() ? resultSet : null))
+                .read((() -> resultSet.next() ? resultSet : null))
                 .map(rs -> getResultSetString(rs, 1))
                 .sorted(Comparator.comparing(String::length))
                 .write(entityManager::persist)
