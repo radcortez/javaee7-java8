@@ -30,6 +30,10 @@ public class AuctionItemWriter extends AbstractItemWriter {
         // Enhanced Way
         items.stream()
              .map(Auction.class::cast)
+             .map(auction -> {
+                 auction.setId(id ++);
+                 return auction;
+             })
              .forEach(entityManager::persist);
     }
 }
