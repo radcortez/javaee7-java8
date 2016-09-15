@@ -20,12 +20,30 @@ public class ChatWebSocketServer {
 
     @OnOpen
     public void onOpen(final Session session, @PathParam("channel") final String channel) {
+        // Old way
+        Set<Session> sessions = channels.get(channel);
+        if (sessions == null) {
+            sessions = ConcurrentHashMap.newKeySet();
+            channels.put(channel, sessions);
+        }
+        sessions.add(session);
+
+        // New way
         channels.computeIfAbsent(channel, s -> ConcurrentHashMap.newKeySet())
                 .add(session);
     }
 
     @OnClose
     public void onClose(final Session session, @PathParam("channel") final String channel) {
+        // Old way
+        Set<Session> sessions = channels.get(channel);
+        if (sessions != null) {
+            sessions.remove(session);
+        } else {
+            throw new IllegalStateException();
+        }
+
+        // New way
         Optional.ofNullable(channels.get(channel))
                 .orElseThrow(IllegalStateException::new)
                 .remove(session);
@@ -38,6 +56,17 @@ public class ChatWebSocketServer {
             return;
         }
 
+        // Old way
+        Set<Session> sessions = channels.get(channel);
+        if (sessions != null) {
+            for (final Session s : sessions) {
+                if (s.isOpen() && !s.getId().equals(session.getId())) {
+                    //s.getAsyncRemote().sendText(getMessage(session, message, channel));
+                }
+            }
+        }
+
+        // New way
         channels.getOrDefault(channel, Collections.emptySet())
                 .stream()
                 .filter(Session::isOpen)
